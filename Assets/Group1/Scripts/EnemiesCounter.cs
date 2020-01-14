@@ -1,16 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemiesCounter : MonoBehaviour
 {
     [SerializeField] private GameObject _blackPanel;
 
-    private void Update()
-    {
-        EnemyMovement[] _enemies = FindObjectsOfType<EnemyMovement>();
+    private HashSet<Enemy> _enemies = new HashSet<Enemy>();
 
-        if (_enemies.Length == 0)
+    private float emptySet = 0;
+
+    private void Start()
+    {
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            enemy.OnDead += ObjectDeadHandler;
+            _enemies.Add(enemy);
+        }
+    }
+
+    private void ObjectDeadHandler(Enemy enemy)
+    {
+        _enemies.Remove(enemy);
+
+        if (_enemies.Count == emptySet)
         {
             EndGame();
         }

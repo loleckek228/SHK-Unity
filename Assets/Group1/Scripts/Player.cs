@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -7,6 +6,7 @@ public class Player : MonoBehaviour
 
     private float accelerationTime;
     private float speed;
+    private float speedCoefficient = 2;
 
     private void Update()
     {
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
         {
             accelerationTime -= Time.deltaTime;
 
-            speed *= 2;
+            speed *= speedCoefficient;
         }
 
         Move();
@@ -31,14 +31,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<EnemyMovement>())
-        {
-            Destroy(collision.gameObject);
-        }
-
         if (collision.gameObject.GetComponent<Accelerator>())
         {
-            accelerationTime = 2;
+            accelerationTime = speedCoefficient;
         }
     }
 }
