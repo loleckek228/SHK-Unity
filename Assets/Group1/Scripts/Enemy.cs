@@ -8,28 +8,26 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _radius;
     [SerializeField] private float _speed;
 
-    private float distanceCoefficient = 0.001f;
-
-    private Vector2 target;
+    private Vector3 target;
 
     public event UnityAction<Enemy> OnDead;
 
     private void Start()
     {
-        SetNextTargerPosition();
+        target = GetNextTargerPosition();
     }
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, target) < distanceCoefficient)
-            SetNextTargerPosition();
+        if (transform.position == target)
+            target = GetNextTargerPosition();
     }
 
-    private void SetNextTargerPosition()
+    private Vector3 GetNextTargerPosition()
     {
-        target = Random.insideUnitCircle * _radius;
+        return Random.insideUnitCircle * _radius;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

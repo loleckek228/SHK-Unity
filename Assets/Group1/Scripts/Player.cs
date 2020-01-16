@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -8,14 +9,22 @@ public class Player : MonoBehaviour
     private float speed;
     private float speedCoefficient = 2;
 
+    public event UnityAction OnAcceleration;
+
+    private void Start()
+    {
+        OnAcceleration += OnPlayerAcceleration;
+    }
+
     private void Update()
     {
-        speed = _fixedSpeed;
         if (accelerationTime > 0)
         {
             accelerationTime -= Time.deltaTime;
-
-            speed *= speedCoefficient;
+        }
+        else
+        {
+            speed = _fixedSpeed;
         }
 
         Move();
@@ -29,11 +38,17 @@ public class Player : MonoBehaviour
         transform.Translate(horizontal, vertical, 0);
     }
 
+    private void OnPlayerAcceleration()
+    {
+        speed *= speedCoefficient;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Accelerator>())
         {
             accelerationTime = speedCoefficient;
+            OnAcceleration?.Invoke();
         }
     }
 }

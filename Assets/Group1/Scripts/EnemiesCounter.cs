@@ -5,24 +5,22 @@ public class EnemiesCounter : MonoBehaviour
 {
     [SerializeField] private GameObject _blackPanel;
 
-    private HashSet<Enemy> _enemies = new HashSet<Enemy>();
-
-    private float emptySet = 0;
+    private HashSet<Enemy> enemies = new HashSet<Enemy>();
 
     private void Start()
     {
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
-            enemy.OnDead += ObjectDeadHandler;
-            _enemies.Add(enemy);
+            enemy.OnDead += OnEnemyDead;
+            enemies.Add(enemy);
         }
     }
 
-    private void ObjectDeadHandler(Enemy enemy)
+    private void OnEnemyDead(Enemy enemy)
     {
-        _enemies.Remove(enemy);
+        enemies.Remove(enemy);
 
-        if (_enemies.Count == emptySet)
+        if (enemies.Count == 0)
         {
             EndGame();
         }
