@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _basedSpeed;
+    [SerializeField] private float _baseSpeed;
 
     private float speedCoefficient = 2;
     private float accelerationTime = 2;
@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            speed = _basedSpeed;
+            speed = _baseSpeed;
         }
 
         Move();
