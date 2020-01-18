@@ -19,6 +19,7 @@ public class EnemiesCounter : MonoBehaviour
     private void OnEnemyDead(Enemy enemy)
     {
         enemies.Remove(enemy);
+        enemy.OnDead -= OnEnemyDead;
 
         if (enemies.Count == 0)
         {

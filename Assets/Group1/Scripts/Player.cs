@@ -3,28 +3,22 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _fixedSpeed;
+    [SerializeField] private float _basedSpeed;
 
-    private float accelerationTime;
-    private float speed;
     private float speedCoefficient = 2;
-
-    public event UnityAction OnAcceleration;
-
-    private void Start()
-    {
-        OnAcceleration += OnPlayerAcceleration;
-    }
+    private float accelerationTime = 2;
+    private float speedAccelerationTime;
+    private float speed;
 
     private void Update()
     {
-        if (accelerationTime > 0)
+        if (speedAccelerationTime > 0)
         {
-            accelerationTime -= Time.deltaTime;
+            speedAccelerationTime -= Time.deltaTime;
         }
         else
         {
-            speed = _fixedSpeed;
+            speed = _basedSpeed;
         }
 
         Move();
@@ -38,8 +32,9 @@ public class Player : MonoBehaviour
         transform.Translate(horizontal, vertical, 0);
     }
 
-    private void OnPlayerAcceleration()
+    private void Acceleration()
     {
+        speedAccelerationTime = accelerationTime;
         speed *= speedCoefficient;
     }
 
@@ -47,8 +42,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Accelerator>())
         {
-            accelerationTime = speedCoefficient;
-            OnAcceleration?.Invoke();
+            Acceleration();
         }
     }
 }
