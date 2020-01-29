@@ -11,15 +11,15 @@ public class EnemiesCounter : MonoBehaviour
     {
         foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
-            enemy.OnDead += OnEnemyDead;
+            enemy.Died += OnEnemyDied;
             enemies.Add(enemy);
         }
     }
 
-    private void OnEnemyDead(Enemy enemy)
+    private void OnEnemyDied(Enemy enemy)
     {
         enemies.Remove(enemy);
-        enemy.OnDead -= OnEnemyDead;
+        enemy.Died -= OnEnemyDied;
 
         if (enemies.Count == 0)
         {

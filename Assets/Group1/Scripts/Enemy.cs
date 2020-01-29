@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     private Vector3 pointOfTarget;
 
-    public event UnityAction<Enemy> OnDead;
+    public event UnityAction<Enemy> Died;
 
     private void Start()
     {
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.GetComponent<Player>())
         {
             Destroy(gameObject);
-            OnDead?.Invoke(this);
+            Died?.Invoke(this);
         }
     }
 }
