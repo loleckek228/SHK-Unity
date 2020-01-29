@@ -10,17 +10,23 @@ public class Player : MonoBehaviour
     private float speedAccelerationTime;
     private float speed;
 
+    private void Start()
+    {
+        speed = _baseSpeed;
+    }
+
     private void Update()
     {
         if (speedAccelerationTime > 0)
         {
             speedAccelerationTime -= Time.deltaTime;
-        }
-        else
-        {
-            speed = _baseSpeed;
-        }
+            if (speedAccelerationTime <= 0)
+            {
 
+                speed /= speedCoefficient;
+            }
+        }
+      
         Move();
     }
 
