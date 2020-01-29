@@ -17,16 +17,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (speedAccelerationTime > 0)
-        {
-            speedAccelerationTime -= Time.deltaTime;
-            if (speedAccelerationTime <= 0)
-            {
-
-                speed /= speedCoefficient;
-            }
-        }
-      
+        CheckAcceleration();
         Move();
     }
 
@@ -36,6 +27,18 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical") * speed;
 
         transform.Translate(horizontal, vertical, 0);
+    }
+
+    private void CheckAcceleration()
+    {
+        if (speedAccelerationTime > 0)
+        {
+            speedAccelerationTime -= Time.deltaTime;
+            if (speedAccelerationTime <= 0)
+            {
+                speed /= speedCoefficient;
+            }
+        }
     }
 
     private void Acceleration()
