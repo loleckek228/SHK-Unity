@@ -8,24 +8,24 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _radius;
     [SerializeField] private float _speed;
 
-    private Vector3 pointOfTarget;
+    private Vector3 target;
 
     public event UnityAction<Enemy> Died;
 
     private void Start()
     {
-        pointOfTarget = GetNextTargetPosition();
+        target = GetRandomPosition();
     }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pointOfTarget, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 
-        if (transform.position == pointOfTarget)
-            pointOfTarget = GetNextTargetPosition();
+        if (transform.position == target)
+            target = GetRandomPosition();
     }
 
-    private Vector3 GetNextTargetPosition()
+    private Vector3 GetRandomPosition()
     {
         return Random.insideUnitCircle * _radius;
     }

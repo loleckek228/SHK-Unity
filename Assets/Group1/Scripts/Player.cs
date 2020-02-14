@@ -23,10 +23,12 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        float horizontal = Input.GetAxis("Horizontal") * speed;
-        float vertical = Input.GetAxis("Vertical") * speed;
+        transform.Translate(GetAxisSpeed("Horizontal"), GetAxisSpeed("Vertical"), 0);
+    }
 
-        transform.Translate(horizontal, vertical, 0);
+    private float GetAxisSpeed(string axis)
+    {
+        return Input.GetAxis(axis) * speed;
     }
 
     private void CheckAcceleration()
