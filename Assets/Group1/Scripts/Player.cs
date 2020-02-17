@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        CheckAcceleration();
+        Deceleration();
         Move();
     }
 
@@ -31,9 +31,19 @@ public class Player : MonoBehaviour
         return Input.GetAxis(axis) * speed;
     }
 
-    private void CheckAcceleration()
+    private bool CheckAcceleration()
     {
         if (speedAccelerationTime > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void Deceleration()
+    {
+        if (CheckAcceleration())
         {
             speedAccelerationTime -= Time.deltaTime;
             if (speedAccelerationTime <= 0)
